@@ -12,19 +12,21 @@ import MyLists from './pages/MyLists';
 function App() {
   return (
     <>
-      <GlobalStyled />
-      <Router>
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/movie/:id" element={<MovieDetails />} />
-            <Route path="/genres" element={<Genres />} />
-            <Route path="/my-lists" element={<MyLists />} />
-          </Routes>
-        </main>
-        <Footer />
-      </Router>
+      <div className="flex flex-col min-h-screen">
+        <GlobalStyled />
+        <Router>
+          <Header /> {/* Fixo no topo */}
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/movie/:id" element={<MovieDetails />} />
+              <Route path="/genres" element={<Genres />} />
+              <Route path="/my-lists" element={<MyLists />} />
+            </Routes>
+          </main>
+          <Footer /> {/* Fixo no rodapé */}
+        </Router>
+      </div>
     </>
   );
 }
