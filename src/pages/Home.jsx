@@ -1,32 +1,30 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Carousel from '../components/Carousel';
+import MovieCard from '../components/MovieCard';
 
-const API_KEY = 'SUA_API_KEY';
+const API_KEY = 'SUA_API_KEY';  // Substitua com sua chave
 const API_URL = 'https://api.themoviedb.org/3';
 
 function Home() {
-    const [popularMovies, setPopularMovies] = useState([]);
-    const [upcomingMovies, setUpcomingMovies] = useState([]);
+    const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-    axios.get(`${API_URL}/movie/popular?api_key=${API_KEY}`)
-        .then(response => setPopularMovies(response.data.results))
-        .catch(error => console.error(error));
-
-    axios.get(`${API_URL}/movie/upcoming?api_key=${API_KEY}`)
-        .then(response => setUpcomingMovies(response.data.results))
-        .catch(error => console.error(error));
+        const fetchMovies = async () => {
+        const response = await axios.get(`${API_URL}/movie/popular?api_key=${API_KEY}`);
+        setMovies(response.data.results);
+        };
+        fetchMovies();
     }, []);
 
     return (
-    <div className="container mx-auto">
-        <h1 className="text-2xl font-bold my-4">Filmes Populares</h1>
-        <Carousel movies={popularMovies} />
-
-        <h1 className="text-2xl font-bold my-4">Filmes que Estão por Vir</h1>
-        <Carousel movies={upcomingMovies} />
-    </div>
+        <div>
+        <h1>Filmes Populares</h1>
+        <div className="movie-list">
+            {movies.map(movie => (
+            <MovieCard key={movie.id} movie={movie} />
+            ))}
+        </div>
+        </div>
     );
 }
 
